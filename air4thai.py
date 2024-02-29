@@ -1,7 +1,7 @@
 import requests
 from pprint import pformat
 
-station_id = "44t"
+station_id = ['100t' ,'60t' ,'33t' ,'34t' ,'o61' ,'87t' ,'105t' ,'77t' ,'28t' ,'29t' ,'31t' ,'74t' ,'o21' ,'o38' ,'71t']
 param = "PM25,PM10,O3,CO,NO2,SO2,WS,TEMP,RH,WD"
 data_type = "hr"
 start_date = "2024-02-19"
