@@ -9,6 +9,8 @@ data = pd.read_csv("Trang_clean.csv")
 data["Date"] = pd.to_datetime(data["Date"], format="%Y-%m-%d")
 data.sort_values("Date", inplace=True)
 
+data["Datetime"] = pd.to_datetime(data["Date"].astype(str) + " " + data["Time"].astype(str))
+
 external_stylesheets = [
     {
         "href": "https://fonts.googleapis.com/css2?"
@@ -103,9 +105,10 @@ def update_chart(start_date, end_date, variable):
     chart_figure = {
         "data": [
             {
-                "x": filtered_data["Date"],
+                "x": filtered_data["Datetime"],
                 "y": filtered_data[variable],
                 "mode": "markers",
+                "type": "scatter",
                 "hovertemplate": "%{y:.2f}<extra></extra>",
             },
         ],
@@ -115,7 +118,7 @@ def update_chart(start_date, end_date, variable):
                 "x": 0.05,
                 "xanchor": "left",
             },
-            "xaxis": {"title": "Date", "fixedrange": True},
+            "xaxis": {"title": "Datetime", "fixedrange": True},
             "yaxis": {"title": variable, "fixedrange": True},
             "colorway": ["#17B897"],
         },
