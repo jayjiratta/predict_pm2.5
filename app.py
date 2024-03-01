@@ -16,6 +16,10 @@ df3 = df2.join(df[['DATETIMEDATA']].set_axis(df.index))
 df3[['Date', 'Time']] = df3['DATETIMEDATA'].str.split(' ', expand=True)
 df4=df3.drop('DATETIMEDATA', axis=1)
 
+new_cols = ['Date','Time','PM25','PM10','O3','CO','NO2','SO2','WS','TEMP','RH','WD']
+df5 = df4[new_cols]
+
+df5.to_csv('Trang_clean.csv', index=False)
 # data["Date"] = pd.to_datetime(data["Date"], format="%Y-%m-%d")
 # data.sort_values("Date", inplace=True)
 
