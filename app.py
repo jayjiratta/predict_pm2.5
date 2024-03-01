@@ -105,8 +105,8 @@ def update_chart(start_date, end_date, variable):
             {
                 "x": filtered_data["Date"],
                 "y": filtered_data[variable],
-                "type": "lines",
-                "hovertemplate": f"{variable}: %{{y}}<extra></extra>",
+                "mode": "markers",
+                "hovertemplate": "%{y:.2f}<extra></extra>",
             },
         ],
         "layout": {
