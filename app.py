@@ -5,9 +5,15 @@ import pandas as pd
 import numpy as np
 from dash.dependencies import Output, Input
 
-data = pd.read_csv("avocado.csv")
-data["Date"] = pd.to_datetime(data["Date"], format="%Y-%m-%d")
-data.sort_values("Date", inplace=True)
+data = pd.read_csv("Trang.csv")
+df = pd.DataFrame(data)
+
+df1 = df[df.isnull().sum(axis=1) < 3]
+cl_null = ['PM25', 'PM10', 'O3', 'CO', 'NO2', 'SO2', 'WS', 'TEMP', 'RH', 'WD']
+df2 = df1[cl_null] = df1[cl_null].fillna(df1[cl_null].mean().round(2))
+
+# data["Date"] = pd.to_datetime(data["Date"], format="%Y-%m-%d")
+# data.sort_values("Date", inplace=True)
 
 external_stylesheets = [
     {
