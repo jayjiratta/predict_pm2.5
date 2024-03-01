@@ -5,23 +5,9 @@ import pandas as pd
 import numpy as np
 from dash.dependencies import Output, Input
 
-data = pd.read_csv("Trang.csv")
-df = pd.DataFrame(data)
-
-df1 = df[df.isnull().sum(axis=1) < 3]
-cl_null = ['PM25', 'PM10', 'O3', 'CO', 'NO2', 'SO2', 'WS', 'TEMP', 'RH', 'WD']
-df2 = df1[cl_null] = df1[cl_null].fillna(df1[cl_null].mean().round(2))
-
-df3 = df2.join(df[['DATETIMEDATA']].set_axis(df.index))
-df3[['Date', 'Time']] = df3['DATETIMEDATA'].str.split(' ', expand=True)
-df4=df3.drop('DATETIMEDATA', axis=1)
-
-new_cols = ['Date','Time','PM25','PM10','O3','CO','NO2','SO2','WS','TEMP','RH','WD']
-df5 = df4[new_cols]
-
-df5.to_csv('Trang_clean.csv', index=False)
-# data["Date"] = pd.to_datetime(data["Date"], format="%Y-%m-%d")
-# data.sort_values("Date", inplace=True)
+data = pd.read_csv("Trang_clean.csv")
+data["Date"] = pd.to_datetime(data["Date"], format="%Y-%m-%d")
+data.sort_values("Date", inplace=True)
 
 external_stylesheets = [
     {
@@ -55,34 +41,19 @@ app.layout = html.Div(
             children=[
                 html.Div(
                     children=[
-                        html.Div(children="Region", className="menu-title"),
+                        html.Div(children="Variable", className="menu-title"),
                         dcc.Dropdown(
-                            id="region-filter",
+                            id="variable-filter",
                             options=[
-                                {"label": region, "value": region}
-                                for region in np.sort(data.region.unique())
+                                {"label": col, "value": col}
+                                for col in ["PM25", "PM10", "O3", "CO", "NO2", "SO2", "WS", "TEMP", "RH", "WD"]
                             ],
-                            value="Albany",
-                            clearable=False,
-                            className="dropdown",
-                        ),
-                    ]
-                ),
-                html.Div(
-                    children=[
-                        html.Div(children="Type", className="menu-title"),
-                        dcc.Dropdown(
-                            id="type-filter",
-                            options=[
-                                {"label": avocado_type, "value": avocado_type}
-                                for avocado_type in data.type.unique()
-                            ],
-                            value="organic",
+                            value="PM25",
                             clearable=False,
                             searchable=False,
                             className="dropdown",
                         ),
-                    ],
+                    ]
                 ),
                 html.Div(
                     children=[
@@ -96,6 +67,7 @@ app.layout = html.Div(
                             max_date_allowed=data.Date.max().date(),
                             start_date=data.Date.min().date(),
                             end_date=data.Date.max().date(),
+                            display_format='YYYY-MM-DD'
                         ),
                     ]
                 ),
@@ -106,13 +78,7 @@ app.layout = html.Div(
             children=[
                 html.Div(
                     children=dcc.Graph(
-                        id="price-chart", config={"displayModeBar": False},
-                    ),
-                    className="card",
-                ),
-                html.Div(
-                    children=dcc.Graph(
-                        id="volume-chart", config={"displayModeBar": False},
+                        id="variable-chart", config={"displayModeBar": False},
                     ),
                     className="card",
                 ),
@@ -124,59 +90,38 @@ app.layout = html.Div(
 
 
 @app.callback(
-    [Output("price-chart", "figure"), Output("volume-chart", "figure")],
+    Output("variable-chart", "figure"),
     [
-        Input("region-filter", "value"),
-        Input("type-filter", "value"),
         Input("date-range", "start_date"),
         Input("date-range", "end_date"),
+        Input("variable-filter", "value"),
     ],
 )
-def update_charts(region, avocado_type, start_date, end_date):
-    mask = (
-        (data.region == region)
-        & (data.type == avocado_type)
-        & (data.Date >= start_date)
-        & (data.Date <= end_date)
-    )
+def update_chart(start_date, end_date, variable):
+    mask = (data['Date'] >= start_date) & (data['Date'] <= end_date)
     filtered_data = data.loc[mask, :]
-    price_chart_figure = {
+    chart_figure = {
         "data": [
             {
                 "x": filtered_data["Date"],
-                "y": filtered_data["AveragePrice"],
+                "y": filtered_data[variable],
                 "type": "lines",
-                "hovertemplate": "$%{y:.2f}<extra></extra>",
+                "hovertemplate": f"{variable}: %{{y}}<extra></extra>",
             },
         ],
         "layout": {
             "title": {
-                "text": "Average Price of Avocados",
+                "text": f"{variable}",
                 "x": 0.05,
                 "xanchor": "left",
             },
-            "xaxis": {"fixedrange": True},
-            "yaxis": {"tickprefix": "$", "fixedrange": True},
+            "xaxis": {"title": "Date", "fixedrange": True},
+            "yaxis": {"title": variable, "fixedrange": True},
             "colorway": ["#17B897"],
         },
     }
 
-    volume_chart_figure = {
-        "data": [
-            {
-                "x": filtered_data["Date"],
-                "y": filtered_data["Total Volume"],
-                "type": "lines",
-            },
-        ],
-        "layout": {
-            "title": {"text": "Avocados Sold", "x": 0.05, "xanchor": "left"},
-            "xaxis": {"fixedrange": True},
-            "yaxis": {"fixedrange": True},
-            "colorway": ["#E12D39"],
-        },
-    }
-    return price_chart_figure, volume_chart_figure
+    return chart_figure
 
 
 if __name__ == "__main__":
