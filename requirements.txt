@@ -3,3 +3,4 @@ pycaret
 dash-bootstrap-components
 pandas
 requests
+gunicorn
