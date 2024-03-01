@@ -6,8 +6,8 @@ station_id = '93t'
 param = "PM25,PM10,O3,CO,NO2,SO2,WS,TEMP,RH,WD"
 
 data_type = "hr"
-start_date = "2023-12-01"
-end_date = "2024-02-20"
+start_date = "2023-01-01"
+end_date = "2024-03-01"
 start_time = "00"
 end_time = "23"
 
