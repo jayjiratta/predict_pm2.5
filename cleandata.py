@@ -20,3 +20,9 @@ df5.to_csv('Trang_clean.csv', index=False)
 
 df5["Date"] = pd.to_datetime(df5["Date"], format="%Y-%m-%d")
 df5.sort_values("Date", inplace=True)
+
+#
+data = pd.read_csv("Trang_clean.csv")
+df6 = pd.DataFrame(data)
+df7 = df6.groupby(['Date']).mean().round(2)
+df7.to_csv('mean_value.csv', index=False)
