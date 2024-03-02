@@ -11,6 +11,10 @@ data.sort_values("Date", inplace=True)
 
 data["Datetime"] = pd.to_datetime(data["Date"].astype(str) + " " + data["Time"].astype(str))
 
+data2 = pd.read_csv("mean_value.csv")
+data2["Date"] = pd.to_datetime(data["Date"], format="%Y-%m-%d")
+data2.sort_values("Date", inplace=True)
+
 external_stylesheets = [
     {
         "href": "https://fonts.googleapis.com/css2?"
@@ -84,15 +88,22 @@ app.layout = html.Div(
                     ),
                     className="card",
                 ),
+                html.Div(
+                    children=dcc.Graph(
+                        id="mean-chart", config={"displayModeBar": False},
+                    ),
+                    className="card",
+                ),
             ],
             className="wrapper",
         ),
+        
     ]
 )
 
 
 @app.callback(
-    Output("variable-chart", "figure"),
+    Output("variable-chart", "figure"),Output("mean-chart", "figure"),
     [
         Input("date-range", "start_date"),
         Input("date-range", "end_date"),
@@ -102,7 +113,7 @@ app.layout = html.Div(
 def update_chart(start_date, end_date, variable):
     mask = (data['Date'] >= start_date) & (data['Date'] <= end_date)
     filtered_data = data.loc[mask, :]
-    chart_figure = {
+    normal_chart_figure = {
         "data": [
             {
                 "x": filtered_data["Datetime"],
@@ -123,8 +134,7 @@ def update_chart(start_date, end_date, variable):
             "colorway": ["#17B897"],
         },
     }
-
-    return chart_figure
+    return normal_chart_figure
 
 
 if __name__ == "__main__":
