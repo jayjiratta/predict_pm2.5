@@ -11,7 +11,7 @@ data.sort_values("Date", inplace=True)
 data["Datetime"] = pd.to_datetime(data["Date"].astype(str) + " " + data["Time"].astype(str))
 
 data2 = pd.read_csv("mean_value.csv")
-data2["Date"] = pd.to_datetime(data["Date"], format="%Y-%m-%d")
+data2["Date"] = pd.to_datetime(data2["Date"], format="%Y-%m-%d")
 data2.sort_values("Date", inplace=True)
 
 external_stylesheets = [
@@ -100,9 +100,9 @@ app.layout = html.Div(
     ]
 )
 
-
 @app.callback(
     Output("variable-chart", "figure"),
+    Output("mean-chart", "figure"),
     [
         Input("date-range", "start_date"),
         Input("date-range", "end_date"),
@@ -133,7 +133,30 @@ def update_chart(start_date, end_date, variable):
             "colorway": ["#17B897"],
         },
     }
-    return normal_chart_figure
+
+    mask2 = (data2['Date'] >= start_date) & (data2['Date'] <= end_date)
+    filtered_data2 = data2.loc[mask2, :]
+    mean_chart_figure = {
+        "data": [
+            {
+                "x": filtered_data2["Date"],
+                "y": filtered_data2[variable],
+                "type": "lines",
+                "hovertemplate": "%{y:.2f}<extra></extra>",
+            },
+        ],
+        "layout": {
+            "title": {
+                "text": f"{variable}",
+                "x": 0.05,
+                "xanchor": "left",
+            },
+            "xaxis": {"title": "Date", "fixedrange": True},
+            "yaxis": {"title": variable, "fixedrange": True},
+            "colorway": ["#17B897"],
+        },
+    }
+    return normal_chart_figure, mean_chart_figure
 
 
 if __name__ == "__main__":
