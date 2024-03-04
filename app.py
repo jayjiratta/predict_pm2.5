@@ -8,7 +8,6 @@ from dash.dependencies import Output, Input
 data = pd.read_csv("Trang_clean.csv")
 data["Date"] = pd.to_datetime(data["Date"], format="%Y-%m-%d")
 data.sort_values("Date", inplace=True)
-
 data["Datetime"] = pd.to_datetime(data["Date"].astype(str) + " " + data["Time"].astype(str))
 
 data2 = pd.read_csv("mean_value.csv")
@@ -103,7 +102,7 @@ app.layout = html.Div(
 
 
 @app.callback(
-    Output("variable-chart", "figure"),Output("mean-chart", "figure"),
+    Output("variable-chart", "figure"),
     [
         Input("date-range", "start_date"),
         Input("date-range", "end_date"),
