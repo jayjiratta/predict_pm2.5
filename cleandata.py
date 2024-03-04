@@ -16,7 +16,7 @@ df4=df3.drop('DATETIMEDATA', axis=1)
 new_cols = ['Date','Time','PM25','PM10','O3','CO','NO2','SO2','WS','TEMP','RH','WD']
 df5 = df4[new_cols]
 
-
+df5.loc[df5["TEMP"] == 0, "TEMP"] = df5["TEMP"].mean().round(2)
 df5.to_csv('Trang_clean.csv', index=False)
 
 df5["Date"] = pd.to_datetime(df5["Date"], format="%Y-%m-%d")
