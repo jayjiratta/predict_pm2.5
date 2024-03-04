@@ -27,7 +27,7 @@ df6 = pd.DataFrame(data2)
 df7 = df6.groupby(['Date']).mean().round(2)
 df7.to_csv('mean_value.csv', index=True)
 
-train_df = df5.iloc[:1000, :]
-test_df = df5.iloc[1000:, :]
+train_df = df5.iloc[:1143, :]
+test_df = df5.iloc[1143:, :]
 train_df.to_csv('train.csv', index=False)
 test_df.to_csv('test.csv', index=False)
