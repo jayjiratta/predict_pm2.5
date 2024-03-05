@@ -17,4 +17,20 @@ response_json = response.json()
 
 pd_from_dict = pd.DataFrame.from_dict(response_json["stations"][0]["data"])
 print(pformat(pd_from_dict))
-pd_from_dict.to_csv(f"Trang.csv")
+df = pd.DataFrame(pd_from_dict)
+df1 = df[df.isnull().sum(axis=1) < 3]
+cl_null = ['DATETIMEDATA','PM25', 'PM10', 'O3', 'CO', 'NO2', 'SO2', 'WS', 'TEMP', 'RH', 'WD']
+df2 = df1[cl_null] = df1[cl_null].fillna(df1[cl_null].mean().round(2))
+
+df2.loc[df2["TEMP"] == 0, "TEMP"] = df2["TEMP"].mean().round(2)
+df2.to_csv('Trang_clean.csv', index=True)
+
+df2[['Date', 'Time']] = df2['DATETIMEDATA'].str.split(' ', expand=True)
+df3 = df2.drop('DATETIMEDATA', axis=1)
+df3 = df2.groupby(['Date']).mean().round(2)
+df3.to_csv('mean_value.csv', index=True)
+
+train_df = df2.iloc[:1143, :]
+test_df = df2.iloc[1143:, :]
+train_df.to_csv('train.csv', index=False)
+test_df.to_csv('test.csv', index=False)
