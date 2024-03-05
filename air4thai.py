@@ -32,5 +32,7 @@ df3.to_csv('mean_value.csv', index=True)
 
 train_df = df2.iloc[:1143, :]
 test_df = df2.iloc[1143:, :]
+train_df = train_df.drop(columns=['DATETIMEDATA','Date','Time'])
+test_df = test_df.drop(columns=['DATETIMEDATA','Date','Time'])
 train_df.to_csv('train.csv', index=False)
 test_df.to_csv('test.csv', index=False)
