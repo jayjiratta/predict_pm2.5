@@ -26,7 +26,7 @@ app = Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 app.title = "Avocado Analytics: Understand Your Avocados!"
 
-app.layout = html.Div(
+template = html.Div(
     children=[
         html.Div(
             children=[
@@ -43,6 +43,12 @@ app.layout = html.Div(
             ],
             className="header",
         ),
+    ]
+)
+
+layout_home = html.Div(
+    children=[
+        template,
         html.Div(
             children=[
                 html.Div(
@@ -159,6 +165,27 @@ def update_chart(start_date, end_date, variable):
     }
     return normal_chart_figure, mean_chart_figure
 
+layout_page2 = html.Div(
+    children=[
+        template,
+        dcc.Markdown('# This will be the content of Page 2')
+    ]
+)
 
+app.layout = html.Div([
+    dcc.Location(id='url', refresh=False),
+    html.Div(id='page-content')
+    ]
+)
+
+@app.callback(Output('page-content', 'children'), Input('url', 'pathname'))
+def display_page(pathname):
+    if pathname == '/':
+        return layout_home
+    elif pathname == '/page2':
+        return layout_page2
+    else:
+        return '404 Page Not Found'
+    
 if __name__ == "__main__":
     app.run_server(debug=True)
