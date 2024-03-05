@@ -172,5 +172,11 @@ layout_page2 = html.Div(
     ]
 )
 
+app.layout = html.Div([
+    dcc.Location(id='url', refresh=False),
+    html.Div(id='page-content')
+    ]
+)
+
 if __name__ == "__main__":
     app.run_server(debug=True)
