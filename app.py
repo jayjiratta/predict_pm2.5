@@ -165,6 +165,12 @@ def update_chart(start_date, end_date, variable):
     }
     return normal_chart_figure, mean_chart_figure
 
+layout_page2 = html.Div(
+    children=[
+        template,
+        dcc.Markdown('# This will be the content of Page 2')
+    ]
+)
 
 if __name__ == "__main__":
     app.run_server(debug=True)
