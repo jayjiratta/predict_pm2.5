@@ -178,5 +178,14 @@ app.layout = html.Div([
     ]
 )
 
+@app.callback(Output('page-content', 'children'), Input('url', 'pathname'))
+def display_page(pathname):
+    if pathname == '/':
+        return layout_home
+    elif pathname == '/page2':
+        return layout_page2
+    else:
+        return '404 Page Not Found'
+    
 if __name__ == "__main__":
     app.run_server(debug=True)
