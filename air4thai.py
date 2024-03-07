@@ -20,7 +20,7 @@ print(pformat(pd_from_dict))
 df = pd.DataFrame(pd_from_dict)
 df1 = df[df.isnull().sum(axis=1) < 3]
 cl_null = ['DATETIMEDATA','PM25', 'PM10', 'O3', 'CO', 'NO2', 'SO2', 'WS', 'TEMP', 'RH', 'WD']
-df2 = df1[cl_null] = df1[cl_null].fillna(df1[cl_null].mean().round(2))
+df2 = df1[cl_null].fillna(df1[cl_null].mean().round(2))
 
 df2.loc[df2["TEMP"] == 0, "TEMP"] = df2["TEMP"].mean().round(2)
 df2.to_csv('Trang_clean.csv', index=True)

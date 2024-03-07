@@ -6,9 +6,8 @@ import numpy as np
 from dash.dependencies import Output, Input
 
 data = pd.read_csv("Trang_clean.csv")
-data["Date"] = pd.to_datetime(data["Date"], format="%Y-%m-%d")
-data.sort_values("Date", inplace=True)
-data["Datetime"] = pd.to_datetime(data["Date"].astype(str) + " " + data["Time"].astype(str))
+data["DATETIMEDATA"] = pd.to_datetime(data["DATETIMEDATA"], format="%Y-%m-%d")
+data.sort_values("DATETIMEDATA", inplace=True)
 
 data2 = pd.read_csv("mean_value.csv")
 data2["Date"] = pd.to_datetime(data2["Date"], format="%Y-%m-%d")
@@ -22,7 +21,7 @@ external_stylesheets = [
     },
 ]
 
-app = Dash(__name__, external_stylesheets=external_stylesheets)
+app = Dash(__name__, external_stylesheets=external_stylesheets, suppress_callback_exceptions=True)
 server = app.server
 app.title = "Avocado Analytics: Understand Your Avocados!"
 
@@ -75,10 +74,10 @@ layout_home = html.Div(
                             ),
                         dcc.DatePickerRange(
                             id="date-range",
-                            min_date_allowed=data.Date.min().date(),
-                            max_date_allowed=data.Date.max().date(),
-                            start_date=data.Date.min().date(),
-                            end_date=data.Date.max().date(),
+                            min_date_allowed=data["DATETIMEDATA"].min().date(),
+                            max_date_allowed=data["DATETIMEDATA"].max().date(),
+                            start_date=data["DATETIMEDATA"].min().date(),
+                            end_date=data["DATETIMEDATA"].max().date(),
                             display_format='YYYY-MM-DD'
                         ),
                     ]
@@ -117,15 +116,16 @@ layout_home = html.Div(
     ],
 )
 def update_chart(start_date, end_date, variable):
-    mask = (data['Date'] >= start_date) & (data['Date'] <= end_date)
+    mask = (data["DATETIMEDATA"] >= start_date) & (data["DATETIMEDATA"] <= end_date)
     filtered_data = data.loc[mask, :]
     normal_chart_figure = {
         "data": [
             {
-                "x": filtered_data["Datetime"],
+                "x": filtered_data["DATETIMEDATA"],
                 "y": filtered_data[variable],
-                "mode": "markers",
-                "type": "scatter",
+                "type": "lines",
+                # "mode": "markers",
+                # "type": "scatter",
                 "hovertemplate": "%{y:.2f}<extra></extra>",
             },
         ],
