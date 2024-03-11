@@ -42,14 +42,13 @@ template = html.Div(
     children=[
         html.Div(
             children=[
-                html.P(children="🥑", className="header-emoji"),
+                html.P(children="🌪", className="header-emoji"),
                 html.H1(
-                    children="Avocado Analytics", className="header-title"
+                    children="Air Quality Metrics Analysis", className="header-title"
                 ),
                 html.P(
-                    children="Analyze the behavior of avocado prices"
-                    " and the number of avocados sold in the US"
-                    " between 2015 and 2018",
+                    children=
+"Exploring the Impact of Environmental Factors on Air Quality",
                     className="header-description",
                 ),
             ],
@@ -92,7 +91,7 @@ layout_home = html.Div(
                             max_date_allowed=data["DATETIMEDATA"].max().date(),
                             start_date=data["DATETIMEDATA"].min().date(),
                             end_date=data["DATETIMEDATA"].max().date(),
-                            display_format='YYYY-MM-DD'
+                            display_format='YYYY-MM-DD',
                         ),
                     ]
                 ),
@@ -149,7 +148,7 @@ def update_chart(start_date, end_date, variable):
             },
             "xaxis": {"title": "Datetime", "fixedrange": True},
             "yaxis": {"title": variable, "fixedrange": True},
-            "colorway": ["#17B897"],
+            "colorway": ["#945127a1"],
         },
     }
 
@@ -172,10 +171,50 @@ def update_chart(start_date, end_date, variable):
             },
             "xaxis": {"title": "Date", "fixedrange": True},
             "yaxis": {"title": variable, "fixedrange": True},
-            "colorway": ["#17B897"],
+            "colorway": ['#945127a1'],
         },
     }
     return normal_chart_figure, mean_chart_figure
+
+# layout_page2 = html.Div(
+#     children=[
+#         navbar,
+#         template,
+#         html.Div(
+#             children=[
+#                 dcc.Graph(
+#                     id='example-graph',
+#                     figure={
+#                         'data': [
+#                             {'x': [1, 2, 3], 'y': [4, 1, 2], 'type': 'bar', 'name': 'SF'},
+#                             {'x': [1, 2, 3], 'y': [2, 4, 5], 'type': 'bar', 'name': u'Montréal'},
+#                         ],
+#                         'layout': {
+#                             'title': 'Dash Data Visualization'
+#                         }
+#                     }
+#                 )
+#             ],
+#             className="content"
+#         )
+#     ]
+# )
+
+# now = pd.Timestamp.now()
+# start_date = now.date()
+# end_date = start_date + pd.DateOffset(days=7)
+# future_dates = pd.date_range(start=start_date, end=end_date, freq='D')
+
+# future_data = pd.DataFrame({'DATETIMEDATA': future_dates})
+# future_data['PM10'] = train['PM10'].mean().round(2)
+# future_data['O3'] = train['O3'].mean().round(2)
+# future_data['CO'] = train['CO'].mean().round(2)
+# future_data['NO2'] = train['NO2'].mean().round(2)
+# future_data['WS'] = train['WS'].mean().round(2)
+
+# predictions = predict_model(bagged_model, data=future_data)
+# predictions = predictions.rename(columns={'Label': 'prediction_label'})
+# predictions["prediction_label"] = predictions["prediction_label"].round(2)
 
 layout_page2 = html.Div(
     children=[
@@ -184,14 +223,16 @@ layout_page2 = html.Div(
         html.Div(
             children=[
                 dcc.Graph(
-                    id='example-graph',
+                    id='prediction-graph',
                     figure={
                         'data': [
-                            {'x': [1, 2, 3], 'y': [4, 1, 2], 'type': 'bar', 'name': 'SF'},
-                            {'x': [1, 2, 3], 'y': [2, 4, 5], 'type': 'bar', 'name': u'Montréal'},
+                            {'x': future_dates, 'y': predictions['prediction_label'], 'type': 'line', 'name': 'PM25 Forecast'}
                         ],
                         'layout': {
-                            'title': 'Dash Data Visualization'
+                            'title': 'PM25 Forecast for Next 7 Days',
+                            'xaxis': {'title': 'Date'},
+                            'yaxis': {'title': 'PM25 Forecast'},
+                            'grid': {'visible': True}
                         }
                     }
                 )
@@ -200,6 +241,7 @@ layout_page2 = html.Div(
         )
     ]
 )
+
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
@@ -215,6 +257,6 @@ def display_page(pathname):
         return layout_page2
     else:
         return '404 Page Not Found'
-    
+
 if __name__ == "__main__":
     app.run_server(debug=True)
