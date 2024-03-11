@@ -1,4 +1,5 @@
-from dash import Dash
+from dash import Dash 
+from dash import dash_table
 from dash import dcc
 from dash import html
 import pandas as pd
@@ -113,6 +114,7 @@ layout_home = html.Div(
                     ),
                     className="card",
                 ),
+                
             ],
             className="wrapper",
         ),
@@ -195,6 +197,12 @@ layout_page2 = html.Div(
                     ),
                     className="card",
                 ),
+#                 html.Div(
+#                     children=dash_table.DataTable(
+#                         id="datatable",
+#                     ),
+#                     className="card",
+# ),
             ],
             className="wrapper",
         ),
@@ -244,6 +252,20 @@ def update_chart_prediction(n_intervals):
     predictions_PM10 = predictions_PM10.rename(columns={'Label': 'prediction_label'})
     predictions_PM10['prediction_label'] = predictions_PM10['prediction_label'].round(2)
     
+    # table_PM25 = pd.DataFrame(predictions_PM25, columns=['DATETIMEDATA', 'prediction_label'])
+    # table_PM25["prediction_label"] = table_PM25["prediction_label"].round(2)
+    # table_PM25 = table_PM25.rename(columns={'prediction_label': 'PM25'})
+
+    # table_PM10 = pd.DataFrame(predictions_PM10, columns=['DATETIMEDATA', 'prediction_label'])
+    # table_PM10["prediction_label"] = table_PM10["prediction_label"].round(2)
+    # table_PM10 = table_PM10.rename(columns={'prediction_label': 'PM10'})
+
+    # merged_table = pd.merge(table_PM25, table_PM10, on='DATETIMEDATA', how='outer')
+    # merged_table.to_csv('./datafile/merged_table_PM10_PM25_prediction.csv', index=True)
+
+    # table = pd.read_csv('./datafile/merged_table_PM10_PM25_prediction.csv')
+    # table = table.rename(columns={"DATETIMEDATA": "Date", "prediction_label": "PM25"})
+
     PM25_chart_figure = {
         "data": [
             {
@@ -288,7 +310,7 @@ def update_chart_prediction(n_intervals):
         },
     }
 
-    return PM25_chart_figure , PM10_chart_figure
+    return PM25_chart_figure , PM10_chart_figure 
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
@@ -301,7 +323,7 @@ app.layout = html.Div([
 def display_page(pathname):
     if pathname == '/':
         return layout_home
-    elif pathname == '/page-2':  # Corrected path
+    elif pathname == '/page-2':
         return layout_page2
     else:
         return '404 Page Not Found'
