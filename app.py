@@ -26,11 +26,13 @@ server = app.server
 app.title = "Avocado Analytics: Understand Your Avocados!"
 
 navbar = html.Div(
+    className="navbar",  # Added a class name for styling
     children=[
         html.Nav(
+            className="nav",
             children=[
-                html.A('Home', href='/'),
-                html.A('Page 2', href='/page-2')
+                html.A('Analysis', href='/'),
+                html.A('Prediction', href='/page-2')
             ]
         )
     ]
@@ -209,7 +211,7 @@ app.layout = html.Div([
 def display_page(pathname):
     if pathname == '/':
         return layout_home
-    elif pathname == '/page2':
+    elif pathname == '/page-2':  # Corrected path
         return layout_page2
     else:
         return '404 Page Not Found'

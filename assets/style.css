@@ -61,7 +61,8 @@ body {
     height: 48px;
 }
 
-.Select--single > .Select-control .Select-value, .Select-placeholder {
+.Select--single>.Select-control .Select-value,
+.Select-placeholder {
     line-height: 48px;
 }
 
@@ -73,4 +74,29 @@ body {
     margin-bottom: 6px;
     font-weight: bold;
     color: #079A82;
+}
+
+.navbar {
+    background-color: #333;
+    display: flex;
+    padding: 10px 20px;
+}
+
+.navbar .nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar .nav a {
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.navbar .nav a:hover {
+    background-color: #222;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
 }
