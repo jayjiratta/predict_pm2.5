@@ -4,12 +4,13 @@ from dash import html
 import pandas as pd
 import numpy as np
 from dash.dependencies import Output, Input
+from pycaret.regression import predict_model, load_model
 
-data = pd.read_csv("Trang_clean.csv")
+data = pd.read_csv("./datafile/Trang_clean.csv")
 data["DATETIMEDATA"] = pd.to_datetime(data["DATETIMEDATA"], format="%Y-%m-%d %H:%M:%S")
 data.sort_values("DATETIMEDATA", inplace=True)
 
-data2 = pd.read_csv("mean_value.csv")
+data2 = pd.read_csv("./datafile/mean_value.csv")
 data2["Date"] = pd.to_datetime(data2["Date"], format="%Y-%m-%d")
 data2.sort_values("Date", inplace=True)
 
@@ -176,76 +177,123 @@ def update_chart(start_date, end_date, variable):
     }
     return normal_chart_figure, mean_chart_figure
 
-# layout_page2 = html.Div(
-#     children=[
-#         navbar,
-#         template,
-#         html.Div(
-#             children=[
-#                 dcc.Graph(
-#                     id='example-graph',
-#                     figure={
-#                         'data': [
-#                             {'x': [1, 2, 3], 'y': [4, 1, 2], 'type': 'bar', 'name': 'SF'},
-#                             {'x': [1, 2, 3], 'y': [2, 4, 5], 'type': 'bar', 'name': u'Montréal'},
-#                         ],
-#                         'layout': {
-#                             'title': 'Dash Data Visualization'
-#                         }
-#                     }
-#                 )
-#             ],
-#             className="content"
-#         )
-#     ]
-# )
-
-# now = pd.Timestamp.now()
-# start_date = now.date()
-# end_date = start_date + pd.DateOffset(days=7)
-# future_dates = pd.date_range(start=start_date, end=end_date, freq='D')
-
-# future_data = pd.DataFrame({'DATETIMEDATA': future_dates})
-# future_data['PM10'] = train['PM10'].mean().round(2)
-# future_data['O3'] = train['O3'].mean().round(2)
-# future_data['CO'] = train['CO'].mean().round(2)
-# future_data['NO2'] = train['NO2'].mean().round(2)
-# future_data['WS'] = train['WS'].mean().round(2)
-
-# predictions = predict_model(bagged_model, data=future_data)
-# predictions = predictions.rename(columns={'Label': 'prediction_label'})
-# predictions["prediction_label"] = predictions["prediction_label"].round(2)
-
 layout_page2 = html.Div(
     children=[
         navbar,
         template,
-        html.Div(
+            html.Div(
             children=[
-                dcc.Graph(
-                    id='prediction-graph',
-                    figure={
-                        'data': [
-                            {'x': future_dates, 'y': predictions['prediction_label'], 'type': 'line', 'name': 'PM25 Forecast'}
-                        ],
-                        'layout': {
-                            'title': 'PM25 Forecast for Next 7 Days',
-                            'xaxis': {'title': 'Date'},
-                            'yaxis': {'title': 'PM25 Forecast'},
-                            'grid': {'visible': True}
-                        }
-                    }
-                )
+                html.Div(
+                    children=dcc.Graph(
+                        id="PM25-chart", config={"displayModeBar": False},
+                    ),
+                    className="card",
+                ),
+                html.Div(
+                    children=dcc.Graph(
+                        id="PM10-chart", config={"displayModeBar": False},
+                    ),
+                    className="card",
+                ),
             ],
-            className="content"
-        )
+            className="wrapper",
+        ),
+        
     ]
 )
 
+@app.callback(
+    Output("PM25-chart", "figure"),
+    Output("PM10-chart", "figure"),
+    [
+        Input('interval-component', 'n_intervals')
+    ]
+)
+def update_chart_prediction(n_intervals):
+    train = pd.read_csv('./datafile/train.csv')
+    train['DATETIMEDATA'] = pd.to_datetime(train['DATETIMEDATA'])
+
+    loaded_model_PM25 = load_model('PM25_pipeline')
+    loaded_model_PM10 = load_model('PM10_pipeline')
+
+    now = pd.Timestamp.now()
+    start_date = now.date()
+    end_date = start_date + pd.DateOffset(days=7)
+
+    future_dates_PM25 = pd.date_range(start=start_date, end=end_date, freq='D')
+    future_data_PM25 = pd.DataFrame({'DATETIMEDATA': future_dates_PM25})
+    future_data_PM25['PM10'] = train['PM10'].mean().round(2)
+    future_data_PM25['O3'] = train['O3'].mean().round(2)
+    future_data_PM25['CO'] = train['CO'].mean().round(2)
+    future_data_PM25['NO2'] = train['NO2'].mean().round(2)
+    future_data_PM25['WS'] = train['WS'].mean().round(2)
+
+    predictions_PM25 = predict_model(loaded_model_PM25, data=future_data_PM25)
+    predictions_PM25 = predictions_PM25.rename(columns={'Label': 'prediction_label'})
+    predictions_PM25['prediction_label'] = predictions_PM25['prediction_label'].round(2)
+
+    future_dates_PM10 = pd.date_range(start=start_date, end=end_date, freq='D')
+    future_data_PM10 = pd.DataFrame({'DATETIMEDATA': future_dates_PM10})
+    future_data_PM10['PM25'] = train['PM25'].mean().round(2)
+    future_data_PM10['O3'] = train['O3'].mean().round(2)
+    future_data_PM10['CO'] = train['CO'].mean().round(2)
+    future_data_PM10['NO2'] = train['NO2'].mean().round(2)
+    future_data_PM10['WS'] = train['WS'].mean().round(2)
+
+    predictions_PM10 = predict_model(loaded_model_PM10, data=future_data_PM10)
+    predictions_PM10 = predictions_PM10.rename(columns={'Label': 'prediction_label'})
+    predictions_PM10['prediction_label'] = predictions_PM10['prediction_label'].round(2)
+    
+    PM25_chart_figure = {
+        "data": [
+            {
+                "x": future_dates_PM25,
+                "y": predictions_PM25['prediction_label'].round(2),
+                "type": "lines",
+                'name': 'PM25 Forecast',
+                "hovertemplate": "%{y:.2f}<extra></extra>",
+            },
+        ],
+        'layout': {
+            'title': { 
+                'text' : f'PM25 Forecast for Next 7 Days',
+                "x": 0.05,
+                "xanchor": "left",
+            },
+            'xaxis': {'title': 'Date', "fixedrange": True},
+            'yaxis': {'title': 'PM25 Forecast', "fixedrange": True},
+            "colorway": ["#945127a1"],
+        },
+    }
+
+    PM10_chart_figure = {
+        "data": [
+            {
+                "x": future_dates_PM10,
+                "y": predictions_PM10['prediction_label'].round(2),
+                "type": "lines",
+                'name': 'PM10 Forecast',
+                "hovertemplate": "%{y:.2f}<extra></extra>",
+            },
+        ],
+        'layout': {
+            'title': { 
+                'text' : f'PM10 Forecast for Next 7 Days',
+                "x": 0.05,
+                "xanchor": "left",
+            },
+            'xaxis': {'title': 'Date', "fixedrange": True},
+            'yaxis': {'title': 'PM10 Forecast', "fixedrange": True},
+            "colorway": ["#945127a1"],
+        },
+    }
+
+    return PM25_chart_figure , PM10_chart_figure
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
-    html.Div(id='page-content')
+    html.Div(id='page-content'),
+    dcc.Interval(id='interval-component',interval=60000)
     ]
 )
 
