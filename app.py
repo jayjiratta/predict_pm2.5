@@ -15,6 +15,8 @@ data2 = pd.read_csv("./datafile/mean_value.csv")
 data2["Date"] = pd.to_datetime(data2["Date"], format="%Y-%m-%d")
 data2.sort_values("Date", inplace=True)
 
+PAGE_SIZE = 5
+
 external_stylesheets = [
     {
         "href": "https://fonts.googleapis.com/css2?"
@@ -34,7 +36,8 @@ navbar = html.Div(
             className="nav",
             children=[
                 html.A('Analysis', href='/'),
-                html.A('Prediction', href='/page-2')
+                html.A('Prediction', href='/page-2'),
+                html.A('Table', href='/page-3')
             ]
         )
     ]
@@ -197,12 +200,6 @@ layout_page2 = html.Div(
                     ),
                     className="card",
                 ),
-#                 html.Div(
-#                     children=dash_table.DataTable(
-#                         id="datatable",
-#                     ),
-#                     className="card",
-# ),
             ],
             className="wrapper",
         ),
@@ -312,6 +309,64 @@ def update_chart_prediction(n_intervals):
 
     return PM25_chart_figure , PM10_chart_figure 
 
+table_predict = pd.read_csv('./datafile/merged_table_PM10_PM25_prediction.csv')
+table_predict = table_predict.drop(columns='Unnamed: 0')
+
+table_analysis = data.drop(columns='Unnamed: 0')
+desired_order = ["DATETIMEDATA", "PM25", "PM10", "O3", "CO", "NO2", "SO2", "WS", "TEMP", "RH", "WD"]
+table_analysis = table_analysis[desired_order]
+
+layout_page3 = html.Div(
+    children=[
+        navbar,
+        template,
+            html.Div(
+            children=[
+                html.Div(
+                    children=dash_table.DataTable(
+                        id="analysis",
+                        columns=[
+                            {"name": i, "id": i} for i in desired_order
+                                ],
+                        page_current=0,
+                        page_size=PAGE_SIZE,
+                        page_action='custom'
+                    ),
+                    className="card",
+                ),
+                html.Div(
+                    children=dash_table.DataTable(
+                        id="prediction",
+                        columns=[
+                            {"name": i, "id": i} for i in ["DATETIMEDATA", "PM25", "PM10"]
+                                ],
+                    ),
+                    className="card",
+                ),
+            ],
+            className="wrapper",
+        ),
+        
+    ]
+)
+
+@app.callback(
+    Output("analysis", "data"),
+    Output("prediction", "data"),
+    [
+        Input('analysis', "page_current"),
+        Input('analysis', "page_size"),
+    ]
+)
+def update_table(analysis_page_current, analysis_page_size):
+    analysis_data = (table_analysis[desired_order]
+                     .iloc[analysis_page_current * analysis_page_size: 
+                           (analysis_page_current + 1) * analysis_page_size]
+                            .to_dict('records'))
+    
+    prediction_data = table_predict.to_dict('records')
+    return analysis_data, prediction_data
+
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     html.Div(id='page-content'),
@@ -325,6 +380,8 @@ def display_page(pathname):
         return layout_home
     elif pathname == '/page-2':
         return layout_page2
+    elif pathname == '/page-3':
+        return layout_page3
     else:
         return '404 Page Not Found'
 
