@@ -1,152 +1,3 @@
-/* body {
-    font-family: "Lato", sans-serif;
-    margin: 0;
-    background-color: #F7F7F7;
-}
-
-.header-one {
-    background-color: #945127a1;
-    height: 300px;
-    padding: 16px 0 0 0;
-}
-
-.header-two {
-    background-color: #945127a1;
-    height: 250px;
-    padding: 16px 0 0 0;
-}
-
-.header-emoji {
-    font-size: 48px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.header-title {
-    color: #FFFFFF;
-    font-size: 48px;
-    font-weight: bold;
-    text-align: center;
-    margin: 0 auto;
-}
-
-.header-second {
-    color: #a0c09c;
-    font-size: 32 px;
-    font-weight: bold;
-    text-align: center;
-    margin: 0 auto;
-    padding: 0.70%;
-}
-
-
-.header-description {
-    color: #f0f0f0;
-    margin: 0 auto;
-    text-align: center;
-    max-width: 500px;
-    padding: 0.50%;
-}
-
-.wrapper {
-    margin-right: auto;
-    margin-left: auto;
-    max-width: 1024px;
-    padding-right: 10px;
-    padding-left: 10px;
-    margin-top: 32px;
-}
-
-.card {
-    margin-bottom: 24px;
-    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.18);
-}
-
-.menu {
-    height: 112px;
-    width: 912px;
-    display: flex;
-    justify-content: space-evenly;
-    padding-top: 24px;
-    margin: -80px auto 0 auto;
-    background-color: #FFFFFF;
-    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.18);
-}
-
-.Select-control {
-    width: 256px;
-    height: 48px;
-}
-
-.Select--single>.Select-control .Select-value,
-.Select-placeholder {
-    line-height: 48px;
-}
-
-.Select--multi .Select-value-label {
-    line-height: 32px;
-}
-
-.menu-title {
-    margin-bottom: 6px;
-    font-weight: bold;
-    color: #522a2a;
-}
-
-.navbar {
-    background-color: #522a2a;
-    display: flex;
-    padding: 10px 20px;
-}
-
-.navbar .nav {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.navbar .nav a {
-    color: white;
-    padding: 10px 15px;
-    text-decoration: none;
-    transition: 0.3s;
-}
-
-.navbar .nav a:hover {
-    background-color: #222;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-}
-
-.CalendarDay__selected_span {
-    background: #da9d77a1;
-    border: 1px double #ffffff;
-    color: #fff;
-}
-
-.CalendarDay__selected, .CalendarDay__selected:active, .CalendarDay__selected:hover {
-    background: #945127a1;
-    border: 1px double #FFFFFF;
-    color: #fff;
-}
-
-.DayPickerKeyboardShortcuts_show__bottomRight::before {
-    border-top: 26px solid transparent;
-    border-right: 33px solid #da9d77a1;
-    bottom: 0;
-    right: 0;
-}
-
-.CalendarDay__selected_span:active, .CalendarDay__selected_span:hover {
-    background: #e4d6b8;
-    border: 1px double #ebdb96;
-    color: #fff;
-}
-
-.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner th {
-    background-color: #da9d77a1;
-} */
-
 body {
     font-family: "Lato", sans-serif;
     margin: 0;
@@ -263,7 +114,7 @@ body {
 }
 
 .navbar .nav a:hover {
-    background-color: #a2b4ce;
+    background-color: #b8c9b4;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
 }
 
@@ -293,5 +144,21 @@ body {
 }
 
 .dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner th {
-    background-color: #ffd700a1;
+    background-color: #CCD3CA;
+}
+
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner table {
+    border-collapse: collapse;
+    font-family: "Lato", sans-serif;
+    font-size: 12.5px;
+    --accent: hotpink;
+    --border: lightgrey;
+    --text-color: #3c3c3c;
+    --hover: #fdfdfd;
+    --background-color-ellipses: #fdfdfd;
+    --faded-text: #fafafa;
+    --faded-text-header: #b4b4b4;
+    --selected-background: rgba(255, 65, 54, 0.2);
+    --faded-dropdown: #f0f0f0;
+    --muted: #c8c8c8;
 }
