@@ -190,7 +190,7 @@ body {
 
 
 .header-description {
-    color: #dde7f5;
+    color: #e6f1ff;
     margin: 0 auto;
     text-align: center;
     max-width: 500px;
@@ -256,40 +256,40 @@ body {
 }
 
 .navbar .nav a {
-    color: white;
+    color: rgb(0, 0, 0);
     padding: 10px 15px;
     text-decoration: none;
     transition: 0.3s;
 }
 
 .navbar .nav a:hover {
-    background-color: #a2b4ce;
+    background-color: #B5C0D0;
+    color: #000;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
 }
 
 .CalendarDay__selected_span {
     background: #dab3bb;
-    border: 1px double #fff;
-    color: #000;
+    border: 1px double #ffffff;
 }
 
 .CalendarDay__selected, .CalendarDay__selected:active, .CalendarDay__selected:hover {
     background: #EED3D9;
-    border: 1px double #B5C0D0;
+    border: 1px double #dab3bb;
     color: #fff;
 }
 
 .DayPickerKeyboardShortcuts_show__bottomRight::before {
     border-top: 26px solid transparent;
-    border-right: 33px solid #B5C0D0;
+    border-right: 33px solid #b1c0d6;
     bottom: 0;
     right: 0;
 }
 
 .CalendarDay__selected_span:active, .CalendarDay__selected_span:hover {
-    background: #00FFFF;
-    border: 1px double #00FF00;
-    color: #fff;
+    background: #ffffff;
+    border: 1px double #fde977a1;
+    color: #000000;
 }
 
 .dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner th {
