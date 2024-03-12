@@ -1,12 +1,18 @@
-body {
+/* body {
     font-family: "Lato", sans-serif;
     margin: 0;
     background-color: #F7F7F7;
 }
 
-.header {
+.header-one {
     background-color: #945127a1;
-    height: 265px;
+    height: 300px;
+    padding: 16px 0 0 0;
+}
+
+.header-two {
+    background-color: #945127a1;
+    height: 250px;
     padding: 16px 0 0 0;
 }
 
@@ -24,12 +30,22 @@ body {
     margin: 0 auto;
 }
 
+.header-second {
+    color: #a0c09c;
+    font-size: 32 px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0.70%;
+}
+
 
 .header-description {
-    color: #000000;
+    color: #f0f0f0;
     margin: 0 auto;
     text-align: center;
     max-width: 500px;
+    padding: 0.50%;
 }
 
 .wrapper {
@@ -100,4 +116,182 @@ body {
 .navbar .nav a:hover {
     background-color: #222;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.CalendarDay__selected_span {
+    background: #da9d77a1;
+    border: 1px double #ffffff;
+    color: #fff;
+}
+
+.CalendarDay__selected, .CalendarDay__selected:active, .CalendarDay__selected:hover {
+    background: #945127a1;
+    border: 1px double #FFFFFF;
+    color: #fff;
+}
+
+.DayPickerKeyboardShortcuts_show__bottomRight::before {
+    border-top: 26px solid transparent;
+    border-right: 33px solid #da9d77a1;
+    bottom: 0;
+    right: 0;
+}
+
+.CalendarDay__selected_span:active, .CalendarDay__selected_span:hover {
+    background: #e4d6b8;
+    border: 1px double #ebdb96;
+    color: #fff;
+}
+
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner th {
+    background-color: #da9d77a1;
+} */
+
+body {
+    font-family: "Lato", sans-serif;
+    margin: 0;
+    background-color: #f5f1ed;
+}
+
+.header-one {
+    background-color: #B5C0D0;
+    height: 300px;
+    padding: 16px 0 0 0;
+}
+
+.header-two {
+    background-color: #B5C0D0;
+    height: 250px;
+    padding: 16px 0 0 0;
+}
+
+.header-emoji {
+    font-size: 48px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.header-title {
+    color: #506a91;
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.header-second {
+    color: #F5E8DD;
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0.70%;
+}
+
+
+.header-description {
+    color: #dde7f5;
+    margin: 0 auto;
+    text-align: center;
+    max-width: 500px;
+    padding: 0.50%;
+}
+
+.wrapper {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1024px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-top: 32px;
+}
+
+.card {
+    margin-bottom: 24px;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.18);
+}
+
+.menu {
+    height: 112px;
+    width: 912px;
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 24px;
+    margin: -80px auto 0 auto;
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.18);
+}
+
+.Select-control {
+    width: 256px;
+    height: 48px;
+}
+
+.Select--single>.Select-control .Select-value,
+.Select-placeholder {
+    line-height: 48px;
+}
+
+.Select--multi .Select-value-label {
+    line-height: 32px;
+}
+
+.menu-title {
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #7469B6;
+}
+
+.navbar {
+    background-color: #B5C0D0;
+    display: flex;
+    padding: 10px 20px;
+}
+
+.navbar .nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar .nav a {
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.navbar .nav a:hover {
+    background-color: #a2b4ce;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.CalendarDay__selected_span {
+    background: #dab3bb;
+    border: 1px double #fff;
+    color: #000;
+}
+
+.CalendarDay__selected, .CalendarDay__selected:active, .CalendarDay__selected:hover {
+    background: #EED3D9;
+    border: 1px double #B5C0D0;
+    color: #fff;
+}
+
+.DayPickerKeyboardShortcuts_show__bottomRight::before {
+    border-top: 26px solid transparent;
+    border-right: 33px solid #B5C0D0;
+    bottom: 0;
+    right: 0;
+}
+
+.CalendarDay__selected_span:active, .CalendarDay__selected_span:hover {
+    background: #00FFFF;
+    border: 1px double #00FF00;
+    color: #fff;
+}
+
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner th {
+    background-color: #ffd700a1;
 }

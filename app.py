@@ -27,7 +27,7 @@ external_stylesheets = [
 
 app = Dash(__name__, external_stylesheets=external_stylesheets, suppress_callback_exceptions=True)
 server = app.server
-app.title = "Avocado Analytics: Understand Your Avocados!"
+app.title = "Air Quality Metrics"
 
 navbar = html.Div(
     className="navbar",  # Added a class name for styling
@@ -43,13 +43,16 @@ navbar = html.Div(
     ]
 )
 
-template = html.Div(
+template_1 = html.Div(
     children=[
         html.Div(
             children=[
-                html.P(children="🌪", className="header-emoji"),
+                html.P(children="🌪️", className="header-emoji"),
                 html.H1(
-                    children="Air Quality Metrics Analysis", className="header-title"
+                    children="Air Quality Metrics", className="header-title"
+                ),
+                html.H2(
+                    children="Analysis", className="header-second"
                 ),
                 html.P(
                     children=
@@ -57,7 +60,51 @@ template = html.Div(
                     className="header-description",
                 ),
             ],
-            className="header",
+            className="header-one",
+        ),
+    ]
+)
+
+template_2 = html.Div(
+    children=[
+        html.Div(
+            children=[
+                html.P(children="🌪️", className="header-emoji"),
+                html.H1(
+                    children="Air Quality Metrics", className="header-title"
+                ),
+                html.H2(
+                    children="Prediction ", className="header-second"
+                ),
+                html.P(
+                    children=
+"Exploring the Impact of Environmental Factors on Air Quality",
+                    className="header-description",
+                ),
+            ],
+            className="header-two",
+        ),
+    ]
+)
+
+template_3 = html.Div(
+    children=[
+        html.Div(
+            children=[
+                html.P(children="🌪️", className="header-emoji"),
+                html.H1(
+                    children="Air Quality Metrics", className="header-title"
+                ),
+                html.H2(
+                    children="Table", className="header-second"
+                ),
+                html.P(
+                    children=
+"Exploring the Impact of Environmental Factors on Air Quality",
+                    className="header-description",
+                ),
+            ],
+            className="header-two",
         ),
     ]
 )
@@ -65,7 +112,7 @@ template = html.Div(
 layout_home = html.Div(
     children=[
         navbar,
-        template,
+        template_1,
         html.Div(
             children=[
                 html.Div(
@@ -154,7 +201,7 @@ def update_chart(start_date, end_date, variable):
             },
             "xaxis": {"title": "Datetime", "fixedrange": True},
             "yaxis": {"title": variable, "fixedrange": True},
-            "colorway": ["#945127a1"],
+            "colorway": ["#b8c9b4"],
         },
     }
 
@@ -171,13 +218,13 @@ def update_chart(start_date, end_date, variable):
         ],
         "layout": {
             "title": {
-                "text": f"{variable}",
+                "text": f"{variable} mean",
                 "x": 0.05,
                 "xanchor": "left",
             },
             "xaxis": {"title": "Date", "fixedrange": True},
             "yaxis": {"title": variable, "fixedrange": True},
-            "colorway": ['#945127a1'],
+            "colorway": ['#b8c9b4'],
         },
     }
     return normal_chart_figure, mean_chart_figure
@@ -185,7 +232,7 @@ def update_chart(start_date, end_date, variable):
 layout_page2 = html.Div(
     children=[
         navbar,
-        template,
+        template_2,
             html.Div(
             children=[
                 html.Div(
@@ -248,20 +295,6 @@ def update_chart_prediction(n_intervals):
     predictions_PM10 = predict_model(loaded_model_PM10, data=future_data_PM10)
     predictions_PM10 = predictions_PM10.rename(columns={'Label': 'prediction_label'})
     predictions_PM10['prediction_label'] = predictions_PM10['prediction_label'].round(2)
-    
-    # table_PM25 = pd.DataFrame(predictions_PM25, columns=['DATETIMEDATA', 'prediction_label'])
-    # table_PM25["prediction_label"] = table_PM25["prediction_label"].round(2)
-    # table_PM25 = table_PM25.rename(columns={'prediction_label': 'PM25'})
-
-    # table_PM10 = pd.DataFrame(predictions_PM10, columns=['DATETIMEDATA', 'prediction_label'])
-    # table_PM10["prediction_label"] = table_PM10["prediction_label"].round(2)
-    # table_PM10 = table_PM10.rename(columns={'prediction_label': 'PM10'})
-
-    # merged_table = pd.merge(table_PM25, table_PM10, on='DATETIMEDATA', how='outer')
-    # merged_table.to_csv('./datafile/merged_table_PM10_PM25_prediction.csv', index=True)
-
-    # table = pd.read_csv('./datafile/merged_table_PM10_PM25_prediction.csv')
-    # table = table.rename(columns={"DATETIMEDATA": "Date", "prediction_label": "PM25"})
 
     PM25_chart_figure = {
         "data": [
@@ -311,15 +344,17 @@ def update_chart_prediction(n_intervals):
 
 table_predict = pd.read_csv('./datafile/merged_table_PM10_PM25_prediction.csv')
 table_predict = table_predict.drop(columns='Unnamed: 0')
+table_predict.rename(columns={'DATETIMEDATA': 'Date'}, inplace=True)
 
-table_analysis = data.drop(columns='Unnamed: 0')
-desired_order = ["DATETIMEDATA", "PM25", "PM10", "O3", "CO", "NO2", "SO2", "WS", "TEMP", "RH", "WD"]
+table_analysis = pd.read_csv('./datafile/Trang_date_time.csv')
+table_analysis = table_analysis.drop(columns='Unnamed: 0')
+desired_order = ['Date','Time', "PM25", "PM10", "O3", "CO", "NO2", "SO2", "WS", "TEMP", "RH", "WD"]
 table_analysis = table_analysis[desired_order]
 
 layout_page3 = html.Div(
     children=[
         navbar,
-        template,
+        template_3,
             html.Div(
             children=[
                 html.Div(
@@ -330,7 +365,15 @@ layout_page3 = html.Div(
                                 ],
                         page_current=0,
                         page_size=PAGE_SIZE,
-                        page_action='custom'
+                        page_action='custom',
+                        style_cell={'textAlign': 'center'},
+                        style_cell_conditional=[
+                            {
+                                'if': {'column_id': c},
+                                'textAlign': 'center'
+                            } for c in ['Date', 'Region']
+                        ],
+                        style_as_list_view=True,
                     ),
                     className="card",
                 ),
@@ -338,8 +381,16 @@ layout_page3 = html.Div(
                     children=dash_table.DataTable(
                         id="prediction",
                         columns=[
-                            {"name": i, "id": i} for i in ["DATETIMEDATA", "PM25", "PM10"]
+                            {"name": i, "id": i} for i in ["Date", "PM25", "PM10"]
                                 ],
+                        style_cell={'textAlign': 'center'},
+                        style_cell_conditional=[
+                            {
+                                'if': {'column_id': c},
+                                'textAlign': 'center'
+                            } for c in ['Date', 'Region']
+                        ],
+                        style_as_list_view=True,
                     ),
                     className="card",
                 ),
