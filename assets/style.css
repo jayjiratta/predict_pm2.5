@@ -42,6 +42,7 @@ body {
 
 .header-description {
     color: #e6f1ff;
+    color: #e6f1ff;
     margin: 0 auto;
     text-align: center;
     max-width: 500px;
@@ -114,8 +115,7 @@ body {
 }
 
 .navbar .nav a:hover {
-    background-color: #aab3c2;
-    color: #000;
+    background-color: #a2b4ce;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
 }
 
@@ -138,6 +138,9 @@ body {
 }
 
 .CalendarDay__selected_span:active, .CalendarDay__selected_span:hover {
+    background: #ffffff;
+    border: 1px double #fde977a1;
+    color: #000000;
     background: #ffffff;
     border: 1px double #fde977a1;
     color: #000000;

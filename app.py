@@ -314,7 +314,7 @@ def update_chart_prediction(n_intervals):
             },
             'xaxis': {'title': 'Date', "fixedrange": True},
             'yaxis': {'title': 'PM25 Forecast', "fixedrange": True},
-            "colorway": ["#945127a1"],
+            "colorway": ["#B5C0D0"],
         },
     }
 
@@ -336,7 +336,7 @@ def update_chart_prediction(n_intervals):
             },
             'xaxis': {'title': 'Date', "fixedrange": True},
             'yaxis': {'title': 'PM10 Forecast', "fixedrange": True},
-            "colorway": ["#945127a1"],
+            "colorway": ["#ccc1b7"],
         },
     }
 
