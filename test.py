@@ -353,50 +353,53 @@ table_analysis = table_analysis[desired_order]
 
 layout_page3 = html.Div(
     children=[
-        navbar,  # Assuming you have a defined navbar component
-        template_3,  # Assuming you have a defined template_3 component
-        html.Div(
+        navbar,
+        template_3,
+            html.Div(
             children=[
                 html.Div(
-                    children=[
-                        html.H3(children="Data Analysis", className="header-table"),  # Descriptive title
-                        dash_table.DataTable(
-                            id="analysis",  # Clear and informative ID
-                            columns=[{"name": i, "id": i} for i in desired_order],
-                            page_current=0,
-                            page_size=PAGE_SIZE,
-                            page_action="custom",
-                            style_cell={"textAlign": "center"},
-                            style_header={"backgroundColor": "#cad0d3"},
-                            style_cell_conditional=[
-                                {"if": {"column_id": c}, "textAlign": "center"}
-                                for c in ["Date", "Region"]
-                            ],
-                            style_as_list_view=True,
-                        ),
-                    ],
+                    children=dash_table.DataTable(
+                        id="analysis",
+                        columns=[
+                            {"name": i, "id": i} for i in desired_order
+                                ],
+                        page_current=0,
+                        page_size=PAGE_SIZE,
+                        page_action='custom',
+                        style_cell={'textAlign': 'center','font-family': '"Open Sans", sans-serif',},
+                        style_header={'backgroundColor': '#cad0d3',},
+                        style_cell_conditional=[
+                            {
+                                'if': {'column_id': c},
+                                'textAlign': 'center'
+                            } for c in ['Date', 'Region']
+                        ],
+                        style_as_list_view=True,
+                    ),
                     className="card",
                 ),
                 html.Div(
-                    children=[
-                        html.H3(children="7-Data Prediction", className="header-table"),  # Descriptive title
-                        dash_table.DataTable(
-                            id="prediction",  # Clear and informative ID
-                            columns=[{"name": i, "id": i} for i in ["Date", "PM25", "PM10"]],
-                            style_cell={"textAlign": "center"},
-                            style_header={"backgroundColor": "#cad0d3"},
-                            style_cell_conditional=[
-                                {"if": {"column_id": c}, "textAlign": "center"}
-                                for c in ["Date", "Region"]
-                            ],
-                            style_as_list_view=True,
-                        ),
-                    ],
+                    children=dash_table.DataTable(
+                        id="prediction",
+                        columns=[
+                            {"name": i, "id": i} for i in ["Date", "PM25", "PM10"]
+                                ],
+                        style_cell={'textAlign': 'center', 'font-family': '"Open Sans", sans-serif',},
+                        style_header={'backgroundColor': '#cad0d3',},
+                        style_cell_conditional=[
+                            {
+                                'if': {'column_id': c},
+                                'textAlign': 'center'
+                            } for c in ['Date', 'Region']
+                        ],
+                        style_as_list_view=True,
+                    ),
                     className="card",
                 ),
             ],
             className="wrapper",
         ),
+        
     ]
 )
 

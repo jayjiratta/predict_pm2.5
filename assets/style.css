@@ -49,6 +49,12 @@ body {
     padding: 0.50%;
 }
 
+.header-table {
+    padding: 2%;
+    text-align: center;
+    margin: 0 auto;
+}
+
 .wrapper {
     margin-right: auto;
     margin-left: auto;
@@ -139,29 +145,30 @@ body {
 
 .CalendarDay__selected_span:active, .CalendarDay__selected_span:hover {
     background: #ffffff;
-    border: 1px double #fde977a1;
+    border: 1px double #b1c0d6;
     color: #000000;
-    background: #ffffff;
-    border: 1px double #fde977a1;
-    color: #000000;
-}
-
-.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner th {
-    background-color: #CCD3CA;
 }
 
 .dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner table {
     border-collapse: collapse;
-    font-family: "Lato", sans-serif;
+    font-family: sans-serif;
     font-size: 12.5px;
-    --accent: hotpink;
+    --accent: rgb(123, 255, 0);
     --border: lightgrey;
     --text-color: #3c3c3c;
-    --hover: #fdfdfd;
-    --background-color-ellipses: #fdfdfd;
-    --faded-text: #fafafa;
-    --faded-text-header: #b4b4b4;
-    --selected-background: rgba(255, 65, 54, 0.2);
-    --faded-dropdown: #f0f0f0;
-    --muted: #c8c8c8;
+    --hover: #ffffff;
+    --background-color-ellipses: #CCD3CA;
+    --faded-text: #a2b4ce;
+    --faded-text-header: #a2b4ce;
+    --selected-background: rgba(255, 203, 106, 0.2);
+    --faded-dropdown: #a2b4ce;
+    --muted: #a2b4ce;
+    border-bottom: 1px solid #a2b4ce;
+    border-top: 1px solid #a2b4ce;
+}
+
+.custom-style {
+    border-bottom: 1px solid rgb(0, 162, 255);
+    border-top: 1px solid rgb(0, 162, 255);
+    background-color: rgba(0, 81, 255, 0.2);
 }
