@@ -263,7 +263,7 @@ body {
 }
 
 .navbar .nav a:hover {
-    background-color: #B5C0D0;
+    background-color: #9fa9b8;
     color: #000;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
 }
@@ -293,5 +293,5 @@ body {
 }
 
 .dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner th {
-    background-color: #ffd700a1;
+    background-color: #dde6d5;
 }
