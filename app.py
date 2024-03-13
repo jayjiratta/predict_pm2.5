@@ -296,6 +296,10 @@ def update_chart_prediction(n_intervals):
     predictions_PM10 = predictions_PM10.rename(columns={'Label': 'prediction_label'})
     predictions_PM10['prediction_label'] = predictions_PM10['prediction_label'].round(2)
 
+    merged_table_PM10_PM25_prediction = pd.merge(predictions_PM10, predictions_PM25, on='DATETIMEDATA', how='outer')
+    merged_table_PM10_PM25_prediction.to_csv('merged_table_PM10_PM25_prediction.csv', index=False)
+
+
     PM25_chart_figure = {
         "data": [
             {
