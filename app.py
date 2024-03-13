@@ -359,7 +359,7 @@ layout_page3 = html.Div(
             children=[
                 html.Div(
                     children=[
-                        html.H3(children="Data Analysis", className="header-table"),  # Descriptive title
+                        html.H3(children="Data Analysis", className="header-table colored-background"),  # Descriptive title
                         dash_table.DataTable(
                             id="analysis",  # Clear and informative ID
                             columns=[{"name": i, "id": i} for i in desired_order],
@@ -367,7 +367,7 @@ layout_page3 = html.Div(
                             page_size=PAGE_SIZE,
                             page_action="custom",
                             style_cell={"textAlign": "center"},
-                            style_header={"backgroundColor": "#cad0d3"},
+                            style_header={"backgroundColor": " rgb(174, 180, 196)"},
                             style_cell_conditional=[
                                 {"if": {"column_id": c}, "textAlign": "center"}
                                 for c in ["Date", "Region"]
@@ -379,12 +379,12 @@ layout_page3 = html.Div(
                 ),
                 html.Div(
                     children=[
-                        html.H3(children="7-Data Prediction", className="header-table"),  # Descriptive title
+                        html.H3(children="7-Day Data Prediction", className="header-table colored-background"),  # Descriptive title
                         dash_table.DataTable(
                             id="prediction",  # Clear and informative ID
                             columns=[{"name": i, "id": i} for i in ["Date", "PM25", "PM10"]],
                             style_cell={"textAlign": "center"},
-                            style_header={"backgroundColor": "#cad0d3"},
+                            style_header={"backgroundColor": " rgb(174, 180, 196)"},
                             style_cell_conditional=[
                                 {"if": {"column_id": c}, "textAlign": "center"}
                                 for c in ["Date", "Region"]
