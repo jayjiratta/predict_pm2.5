@@ -167,8 +167,6 @@ body {
     border-top: 1px solid #a2b4ce;
 }
 
-.custom-style {
-    border-bottom: 1px solid rgb(0, 162, 255);
-    border-top: 1px solid rgb(0, 162, 255);
-    background-color: rgba(0, 81, 255, 0.2);
+.colored-background {
+    background-color: rgb(198, 202, 212); 
 }
