@@ -7,13 +7,13 @@ body {
 .header-one {
     background-color: #B5C0D0;
     height: 300px;
-    padding: 16px 0 0 0;
+    padding: 50px 0 0 0;
 }
 
 .header-two {
     background-color: #B5C0D0;
     height: 250px;
-    padding: 16px 0 0 0;
+    padding: 50px 0 0 0;
 }
 
 .header-emoji {
@@ -104,7 +104,10 @@ body {
     background-color: #B5C0D0;
     display: flex;
     padding: 10px 20px;
-    justify-content: flex-start;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
 .navbar .nav {
@@ -152,7 +155,7 @@ body {
 
 .dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner table {
     border-collapse: collapse;
-    font-family: sans-serif;
+    font-family: 'Lato' !important;
     font-size: 12.5px;
     --accent: rgb(123, 255, 0);
     --border: lightgrey;

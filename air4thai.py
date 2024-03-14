@@ -30,6 +30,7 @@ test_df = df2.iloc[1143:, :]
 train_df.to_csv('./datafile/train.csv', index=False)
 test_df.to_csv('./datafile/test.csv', index=False)
 
+# df2 = ('./datafile/Trang_clean.csv')
 df2[['Date', 'Time']] = df2['DATETIMEDATA'].str.split(' ', expand=True)
 df3 = df2.drop('DATETIMEDATA', axis=1)
 df3.to_csv('./datafile/Trang_date_time.csv', index=True)

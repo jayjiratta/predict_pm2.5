@@ -15,7 +15,7 @@ data2 = pd.read_csv("./datafile/mean_value.csv")
 data2["Date"] = pd.to_datetime(data2["Date"], format="%Y-%m-%d")
 data2.sort_values("Date", inplace=True)
 
-PAGE_SIZE = 5
+PAGE_SIZE = 10
 
 external_stylesheets = [
     {
@@ -30,7 +30,7 @@ server = app.server
 app.title = "Air Quality Metrics"
 
 navbar = html.Div(
-    className="navbar",  # Added a class name for styling
+    className="navbar", 
     children=[
         html.Nav(
             className="nav",
@@ -357,15 +357,15 @@ table_analysis = table_analysis[desired_order]
 
 layout_page3 = html.Div(
     children=[
-        navbar,  # Assuming you have a defined navbar component
-        template_3,  # Assuming you have a defined template_3 component
+        navbar,
+        template_3,
         html.Div(
             children=[
                 html.Div(
                     children=[
-                        html.H3(children="Data Analysis", className="header-table colored-background"),  # Descriptive title
+                        html.H3(children="Data Analysis", className="header-table colored-background"),
                         dash_table.DataTable(
-                            id="analysis",  # Clear and informative ID
+                            id="analysis", 
                             columns=[{"name": i, "id": i} for i in desired_order],
                             page_current=0,
                             page_size=PAGE_SIZE,
@@ -383,9 +383,9 @@ layout_page3 = html.Div(
                 ),
                 html.Div(
                     children=[
-                        html.H3(children="7-Day Data Prediction", className="header-table colored-background"),  # Descriptive title
+                        html.H3(children="7-Day Data Prediction", className="header-table colored-background"),
                         dash_table.DataTable(
-                            id="prediction",  # Clear and informative ID
+                            id="prediction", 
                             columns=[{"name": i, "id": i} for i in ["Date", "PM25", "PM10"]],
                             style_cell={"textAlign": "center"},
                             style_header={"backgroundColor": " rgb(174, 180, 196)"},
