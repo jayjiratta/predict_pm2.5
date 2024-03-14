@@ -274,11 +274,11 @@ def update_chart_prediction(n_intervals):
 
     future_dates_PM25 = pd.date_range(start=start_date, end=end_date, freq='D')
     future_data_PM25 = pd.DataFrame({'DATETIMEDATA': future_dates_PM25})
-    future_data_PM25['PM10'] = train['PM10'].mean().round(2)
-    future_data_PM25['O3'] = train['O3'].mean().round(2)
-    future_data_PM25['CO'] = train['CO'].mean().round(2)
-    future_data_PM25['NO2'] = train['NO2'].mean().round(2)
-    future_data_PM25['WS'] = train['WS'].mean().round(2)
+    future_data_PM25['PM10'] = data['PM10'].mean().round(2)
+    future_data_PM25['O3'] = data['O3'].mean().round(2)
+    future_data_PM25['CO'] = data['CO'].mean().round(2)
+    future_data_PM25['NO2'] = data['NO2'].mean().round(2)
+    future_data_PM25['WS'] = data['WS'].mean().round(2)
 
     predictions_PM25 = predict_model(loaded_model_PM25, data=future_data_PM25)
     predictions_PM25 = predictions_PM25.rename(columns={'Label': 'prediction_label'})
@@ -286,18 +286,18 @@ def update_chart_prediction(n_intervals):
 
     future_dates_PM10 = pd.date_range(start=start_date, end=end_date, freq='D')
     future_data_PM10 = pd.DataFrame({'DATETIMEDATA': future_dates_PM10})
-    future_data_PM10['PM25'] = train['PM25'].mean().round(2)
-    future_data_PM10['O3'] = train['O3'].mean().round(2)
-    future_data_PM10['CO'] = train['CO'].mean().round(2)
-    future_data_PM10['NO2'] = train['NO2'].mean().round(2)
-    future_data_PM10['WS'] = train['WS'].mean().round(2)
+    future_data_PM10['PM25'] = data['PM25'].mean().round(2)
+    future_data_PM10['O3'] = data['O3'].mean().round(2)
+    future_data_PM10['CO'] = data['CO'].mean().round(2)
+    future_data_PM10['NO2'] = data['NO2'].mean().round(2)
+    future_data_PM10['WS'] = data['WS'].mean().round(2)
 
     predictions_PM10 = predict_model(loaded_model_PM10, data=future_data_PM10)
     predictions_PM10 = predictions_PM10.rename(columns={'Label': 'prediction_label'})
     predictions_PM10['prediction_label'] = predictions_PM10['prediction_label'].round(2)
 
     merged_table_PM10_PM25_prediction = pd.merge(predictions_PM10, predictions_PM25, on='DATETIMEDATA', how='outer')
-    merged_table_PM10_PM25_prediction.to_csv('merged_table_PM10_PM25_prediction.csv', index=False)
+    merged_table_PM10_PM25_prediction.to_csv('./datafile/merged_table_PM10_PM25_prediction.csv', index=False)
 
 
     PM25_chart_figure = {
@@ -347,7 +347,7 @@ def update_chart_prediction(n_intervals):
     return PM25_chart_figure , PM10_chart_figure 
 
 table_predict = pd.read_csv('./datafile/merged_table_PM10_PM25_prediction.csv')
-table_predict = table_predict.drop(columns='Unnamed: 0')
+# table_predict = table_predict.drop(columns='Unnamed: 0')
 table_predict.rename(columns={'DATETIMEDATA': 'Date'}, inplace=True)
 
 table_analysis = pd.read_csv('./datafile/Trang_date_time.csv')

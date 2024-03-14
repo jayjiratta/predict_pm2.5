@@ -101,9 +101,10 @@ body {
 }
 
 .navbar {
-    background-color: #B5C0D0;
+    background-color: #a8aa90;
     display: flex;
     padding: 10px 20px;
+    justify-content: flex-start;
 }
 
 .navbar .nav {
